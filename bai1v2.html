@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang cá nhân - Lưu Công Chung</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.4s ease;
+            background-color: #ffffff;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #444;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        main {
+            padding: 30px 20px;
+            max-width: 800px;
+            margin: auto;
+        }
+
+        .greeting {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            padding: 10px;
+            border-left: 5px solid #2c3e50;
+            background-color: rgba(255, 255, 255, 0.6);
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #333;
+            color: white;
+            margin-top: 15px;
+        }
+
+        button:hover {
+            opacity: 0.8;
+        }
+
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Lưu Công Chung</h1>
+        <p>Trang giới thiệu cá nhân</p>
+    </header>
+
+    <nav>
+        <a href="#about">Giới thiệu</a>
+    </nav>
+
+    <main>
+        <!-- Lời chào theo buổi -->
+        <div id="greeting-text" class="greeting"></div>
+
+        <section id="about">
+            <h2>Về tôi</h2>
+            <p>Xin chào! Tôi là Lưu Công Chung. Đam mê học hỏi công nghệ và phát triển các sản phẩm phần mềm tương tác.</p>
+        </section>
+
+        <!-- Nút đổi màu -->
+        <button id="bg-btn">Đổi màu nền</button>
+    </main>
+
+    <footer></footer>
+
+    <script>
+        // 1. Lời chào theo buổi (Sáng / Chiều / Tối)
+        var greetingElem = document.getElementById("greeting-text");
+        var now = new Date();
+        var currentHour = now.getHours();
+        var greetingMessage = "";
+
+        if (currentHour >= 5 && currentHour < 12) {
+            greetingMessage = "Chào buổi sáng, tôi là Lưu Công Chung! Chúc bạn một ngày tốt lành.";
+        } else if (currentHour >= 12 && currentHour < 18) {
+            greetingMessage = "Chào buổi chiều, tôi là Lưu Công Chung! Chúc bạn làm việc hiệu quả.";
+        } else {
+            greetingMessage = "Chào buổi tối, tôi là Lưu Công Chung! Chúc bạn một buổi tối vui vẻ.";
+        }
+
+        greetingElem.innerText = greetingMessage;
+
+        // 2. Đổi 3 màu nền (Đỏ -> Cam -> Vàng)
+        var colors = ["#ff4d4d", "#ff944d", "#ffdb4d"];
+        var colorIndex = 0;
+
+        var btn = document.getElementById("bg-btn");
+
+        btn.addEventListener("click", function() {
+            document.body.style.backgroundColor = colors[colorIndex];
+            colorIndex = (colorIndex + 1) % colors.length;
+        });
+    </script>
+
+</body>
+</html>

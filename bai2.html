@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài 2: Máy tính đơn giản</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f4f4f9;
+            margin: 0;
+        }
+
+        .calculator {
+            background-color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            width: 280px;
+        }
+
+        /* Màn hình hiển thị */
+        #display {
+            background-color: #222;
+            color: #fff;
+            font-size: 28px;
+            text-align: right;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            word-wrap: break-word;
+            min-height: 35px;
+        }
+
+        /* Lưới các nút bấm */
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        button {
+            padding: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #e0e0e0;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background-color: #d4d4d4;
+        }
+
+        /* Tùy chỉnh màu sắc cho các nút chức năng */
+        button.operator {
+            background-color: #ff9500;
+            color: white;
+        }
+
+        button.operator:hover {
+            background-color: #e08500;
+        }
+
+        button.clear {
+            background-color: #ff3b30;
+            color: white;
+            grid-column: span 2;
+        }
+
+        button.clear:hover {
+            background-color: #d32f2f;
+        }
+
+        button.equal {
+            background-color: #34c759;
+            color: white;
+            grid-column: span 2;
+        }
+
+        button.equal:hover {
+            background-color: #2e7d32;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="calculator">
+        <!-- Màn hình hiển thị số và biểu thức -->
+        <div id="display">0</div>
+
+        <!-- Các nút bấm -->
+        <div class="buttons">
+            <button class="clear" id="btn-clear">Clear</button>
+            <button class="operator">/</button>
+            <button class="operator">*</button>
+
+            <button>7</button>
+            <button>8</button>
+            <button>9</button>
+            <button class="operator">-</button>
+
+            <button>4</button>
+            <button>5</button>
+            <button>6</button>
+            <button class="operator">+</button>
+
+            <button>1</button>
+            <button>2</button>
+            <button>3</button>
+
+            <button>0</button>
+            <button class="equal">=</button>
+        </div>
+    </div>
+
+    <script>
+        const display = document.getElementById("display");
+        const buttons = document.querySelectorAll("button");
+
+        // Lắng nghe sự kiện click trên tất cả các nút bấm bằng addEventListener
+        buttons.forEach(button => {
+            button.addEventListener("click", function() {
+                const value = this.innerText;
+
+                if (value === "Clear") {
+                    // Khi bấm Clear: đặt lại màn hình về giá trị 0
+                    display.innerText = "0";
+                } 
+                else if (value === "=") {
+                    // Khi bấm =: tính toán biểu thức hiện có trên màn hình
+                    try {
+                        display.innerText = eval(display.innerText);
+                    } catch (error) {
+                        display.innerText = "Lỗi!";
+                    }
+                } 
+                else {
+                    // Khi bấm số/phép tính: nối vào màn hình hiển thị bằng .innerText
+                    if (display.innerText === "0" || display.innerText === "Lỗi!") {
+                        display.innerText = value;
+                    } else {
+                        display.innerText += value;
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
