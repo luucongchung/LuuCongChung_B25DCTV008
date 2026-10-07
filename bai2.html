@@ -1,157 +1,184 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bài 2: Máy tính đơn giản</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background-color: #f4f4f9;
-            margin: 0;
-        }
-
-        .calculator {
-            background-color: #333;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            width: 280px;
-        }
-
-        /* Màn hình hiển thị */
-        #display {
-            background-color: #222;
-            color: #fff;
-            font-size: 28px;
-            text-align: right;
-            padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 15px;
-            word-wrap: break-word;
-            min-height: 35px;
-        }
-
-        /* Lưới các nút bấm */
-        .buttons {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-        }
-
-        button {
-            padding: 15px;
-            font-size: 18px;
-            font-weight: bold;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            background-color: #e0e0e0;
-            transition: 0.2s;
-        }
-
-        button:hover {
-            background-color: #d4d4d4;
-        }
-
-        /* Tùy chỉnh màu sắc cho các nút chức năng */
-        button.operator {
-            background-color: #ff9500;
-            color: white;
-        }
-
-        button.operator:hover {
-            background-color: #e08500;
-        }
-
-        button.clear {
-            background-color: #ff3b30;
-            color: white;
-            grid-column: span 2;
-        }
-
-        button.clear:hover {
-            background-color: #d32f2f;
-        }
-
-        button.equal {
-            background-color: #34c759;
-            color: white;
-            grid-column: span 2;
-        }
-
-        button.equal:hover {
-            background-color: #2e7d32;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CV Cá Nhân - Lưu Công Chung (ReactJS)</title>
+  <!-- React & ReactDOM CDN -->
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <!-- Babel CDN -->
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- FontAwesome Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+  </style>
 </head>
-<body>
+<body class="bg-slate-950 text-slate-100 min-h-screen py-10 px-4">
 
-    <div class="calculator">
-        <!-- Màn hình hiển thị số và biểu thức -->
-        <div id="display">0</div>
+  <div id="root" class="max-w-4xl mx-auto"></div>
 
-        <!-- Các nút bấm -->
-        <div class="buttons">
-            <button class="clear" id="btn-clear">Clear</button>
-            <button class="operator">/</button>
-            <button class="operator">*</button>
+  <script type="text/babel">
+    // =========================================================================
+    // COMPONENT 1: Section (Sử dụng props 'children' bọc nội dung)
+    // =========================================================================
+    function Section({ title, icon, children }) {
+      return (
+        <section class="bg-slate-900 border border-slate-800 rounded-2xl p-6 mb-6 shadow-xl">
+          <h2 class="text-xl font-bold text-indigo-400 flex items-center gap-3 mb-4 pb-2 border-b border-slate-800">
+            {icon && <i class={`${icon} text-lg`}></i>}
+            {title}
+          </h2>
+          <div>{children}</div>
+        </section>
+      );
+    }
 
-            <button>7</button>
-            <button>8</button>
-            <button>9</button>
-            <button class="operator">-</button>
+    // =========================================================================
+    // COMPONENT 2: Header (Hiển thị thông tin cá nhân)
+    // =========================================================================
+    function Header({ profile }) {
+      return (
+        <header class="bg-slate-900 border border-slate-800 rounded-2xl p-6 sm:p-8 mb-6 shadow-2xl flex flex-col sm:flex-row items-center gap-6">
+          <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-full border-4 border-indigo-500 bg-indigo-950/50 flex items-center justify-center text-4xl text-indigo-400 shadow-lg">
+            <i class="fa-solid fa-user-graduate"></i>
+          </div>
+          <div class="text-center sm:text-left flex-1">
+            <h1 class="text-2xl sm:text-3xl font-extrabold text-white mb-1">{profile.name}</h1>
+            <p class="text-indigo-400 font-semibold text-lg mb-3">{profile.title}</p>
+            <div class="flex flex-wrap justify-center sm:justify-start gap-4 text-sm text-slate-300">
+              <span class="flex items-center gap-2"><i class="fa-solid fa-envelope text-indigo-400"></i> {profile.email}</span>
+              <span class="flex items-center gap-2"><i class="fa-solid fa-phone text-indigo-400"></i> {profile.phone}</span>
+              <span class="flex items-center gap-2"><i class="fa-solid fa-location-dot text-indigo-400"></i> {profile.location}</span>
+            </div>
+          </div>
+        </header>
+      );
+    }
 
-            <button>4</button>
-            <button>5</button>
-            <button>6</button>
-            <button class="operator">+</button>
-
-            <button>1</button>
-            <button>2</button>
-            <button>3</button>
-
-            <button>0</button>
-            <button class="equal">=</button>
+    // =========================================================================
+    // COMPONENT 3: SkillList (Truyền mảng 4 kỹ năng học tập qua props)
+    // =========================================================================
+    function SkillList({ skills }) {
+      return (
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {skills.map((skill, index) => (
+            <div key={index} class="bg-slate-950 p-4 rounded-xl border border-slate-800">
+              <div class="flex justify-between text-sm font-semibold mb-2">
+                <span class="text-slate-200 flex items-center gap-2">
+                  <i class={`${skill.icon} text-indigo-400`}></i> {skill.name}
+                </span>
+                <span class="text-indigo-400">{skill.level}%</span>
+              </div>
+              <div class="w-full bg-slate-800 rounded-full h-2.5 overflow-hidden">
+                <div 
+                  class="bg-indigo-500 h-2.5 rounded-full transition-all duration-500" 
+                  style={{ width: `${skill.level}%` }}
+                ></div>
+              </div>
+            </div>
+          ))}
         </div>
-    </div>
+      );
+    }
 
-    <script>
-        const display = document.getElementById("display");
-        const buttons = document.querySelectorAll("button");
+    // =========================================================================
+    // COMPONENT 4: ProjectList (Truyền mảng danh sách dự án qua props)
+    // =========================================================================
+    function ProjectList({ projects }) {
+      return (
+        <div class="space-y-4">
+          {projects.map((project, index) => (
+            <div key={index} class="bg-slate-950 p-4 rounded-xl border border-slate-800 hover:border-indigo-500/50 transition-colors">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-2">
+                <h3 class="font-bold text-lg text-slate-100">{project.name}</h3>
+                <span class="text-xs bg-indigo-950 text-indigo-300 border border-indigo-800 px-2.5 py-1 rounded-full font-mono w-fit">
+                  {project.role}
+                </span>
+              </div>
+              <p class="text-slate-300 text-sm mb-3 leading-relaxed">{project.description}</p>
+              <div class="flex flex-wrap gap-2">
+                {project.techStack.map((tech, tIdx) => (
+                  <span key={tIdx} class="text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded border border-slate-700">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      );
+    }
 
-        // Lắng nghe sự kiện click trên tất cả các nút bấm bằng addEventListener
-        buttons.forEach(button => {
-            button.addEventListener("click", function() {
-                const value = this.innerText;
+    // =========================================================================
+    // COMPONENT CHÍNH: App
+    // =========================================================================
+    function App() {
+      // 1. Thông tin cá nhân
+      const profileData = {
+        name: "Lưu Công Chung",
+        title: "Lập trình viên / Sinh viên CNTT",
+        email: "luucongchung99123@gmail.com",
+        phone: "0978360907",
+        location: "Hà Nội, Việt Nam",
+        summary: "Sinh viên ngành Công nghệ Thông tin có tư duy logic tốt, khả năng tự học cao và đam mê phát triển phần mềm, xây dựng giao diện ứng dụng web tối ưu trải nghiệm người dùng."
+      };
 
-                if (value === "Clear") {
-                    // Khi bấm Clear: đặt lại màn hình về giá trị 0
-                    display.innerText = "0";
-                } 
-                else if (value === "=") {
-                    // Khi bấm =: tính toán biểu thức hiện có trên màn hình
-                    try {
-                        display.innerText = eval(display.innerText);
-                    } catch (error) {
-                        display.innerText = "Lỗi!";
-                    }
-                } 
-                else {
-                    // Khi bấm số/phép tính: nối vào màn hình hiển thị bằng .innerText
-                    if (display.innerText === "0" || display.innerText === "Lỗi!") {
-                        display.innerText = value;
-                    } else {
-                        display.innerText += value;
-                    }
-                }
-            });
-        });
-    </script>
+      // 2. Mảng 4 Kỹ năng học tập mới
+      const skillsData = [
+        { name: "Tự học & Nghiên cứu tài liệu", level: 90, icon: "fa-solid fa-book-open" },
+        { name: "Tư duy phản biện & Giải quyết vấn đề", level: 85, icon: "fa-solid fa-brain" },
+        { name: "Quản lý thời gian & Lập kế hoạch", level: 80, icon: "fa-solid fa-calendar-check" },
+        { name: "Làm việc nhóm & Giao tiếp", level: 85, icon: "fa-solid fa-users" }
+      ];
 
+      // 3. Mảng Dự án / Bài tập thực hành
+      const projectsData = [
+        {
+          name: "Virtual Calculator App",
+          role: "Frontend Developer",
+          description: "Xây dựng máy tính bỏ túi trực tuyến bằng ReactJS, hỗ trợ xử lý biểu thức toán học thời gian thực và sự kiện bàn phím.",
+          techStack: ["ReactJS", "JavaScript (ES6)", "Tailwind CSS"]
+        },
+        {
+          name: "Trang Web CV Cá Nhân",
+          role: "Frontend Developer",
+          description: "Chuyển đổi giao diện CV sang ReactJS với kiến trúc Component tái sử dụng (Header, Section, SkillList, ProjectList).",
+          techStack: ["ReactJS", "JSX", "Tailwind CSS"]
+        }
+      ];
+
+      return (
+        <main class="w-full">
+          {/* Header Component */}
+          <Header profile={profileData} />
+
+          {/* Section Giới thiệu (Dùng props children) */}
+          <Section title="Mục tiêu & Giới thiệu" icon="fa-solid fa-id-card">
+            <p class="text-slate-300 leading-relaxed text-sm sm:text-base">
+              {profileData.summary}
+            </p>
+          </Section>
+
+          {/* Section Kỹ năng học tập */}
+          <Section title="Kỹ năng học tập & Phát triển" icon="fa-solid fa-lightbulb">
+            <SkillList skills={skillsData} />
+          </Section>
+
+          {/* Section Dự án thực hành */}
+          <Section title="Dự án & Bài tập thực hành" icon="fa-solid fa-laptop-code">
+            <ProjectList projects={projectsData} />
+          </Section>
+        </main>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById("root"));
+    root.render(<App />);
+  </script>
 </body>
 </html>
